@@ -61,9 +61,54 @@ BibleApiResult[] result =  new RestTemplate().getForObject(url, BibleApiResult[]
 
 기능이 의도대로 잘 만들어졌고, **속도가 많이 개선되었다.**
 
+**2024-08-24**
+
+이전에 외부 API를 사용하여 데이터를 불러올 때와 현재 DB에서 데이터를 불러올 때 속도를 비교해보기 위해서 서비스 단에 메서드의 시작지점과 종료지점에 StopWatch 클래스를 사용해 시간을 측정하여 기록을 남기는 기능을 AOP를 통해 추가하였다. 
+
+```java
+    @Around("enableTimer()")
+    public Object LogProcessingTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        StopWatch stopWatch = new StopWatch();
+
+        stopWatch.start();
+        Object result = joinPoint.proceed();
+        stopWatch.stop();
+
+        methodUsageLogService.logThisMethodUsage(joinPoint, stopWatch);
+        return result;
+    }
+```
+
+```java
+@Service
+@RequiredArgsConstructor
+public class MethodUsageLogService {
+    private final MethodUsageLogRepository methodUsageLogRepository;
+    public void logThisMethodUsage(ProceedingJoinPoint joinPoint, StopWatch stopWatch) {
+        BibleFindReqDto params = (BibleFindReqDto) joinPoint.getArgs()[0]; // 메서드의 파라미터(성경 구절 정보)을 요청했는지 함께 기록
+        String engAbbr = params.getEngAbbr();
+        String verseInfo = params.getVerseInfo();
+        Long processingTime = stopWatch.getTotalTimeMillis();
+        LocalDateTime now = LocalDateTime.now();
+
+        MethodUsageLogEntity entity = new MethodUsageLogEntity();
+        entity.setEngAbbr(engAbbr);
+        entity.setVerseInfo(verseInfo);
+        entity.setProcessingTime(processingTime);
+        entity.setWhenRequested(now);
+        methodUsageLogRepository.save(entity);
+    }
+}
+```
+
+기발기록: (https://github.com/RiverCastle/QuickBibleFinderApi/commit/05a772b23a7147fd493be5ef6fae4a38f1d1cb86)
+
 
 
 ## 레포지토리
+
+https://github.com/RiverCastle/QuickBibleFinderApi
+
 
 ## 연락처
 이메일: fayal3@naver.com
