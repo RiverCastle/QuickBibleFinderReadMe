@@ -26,6 +26,25 @@ or
 
 ## 문제상황 및 해결 / 업데이트
 
+**2024-08-09**
+
+성경이라는 두꺼운 책은 66권의 책들로 이루어져 있고, 66권의 책은 약 3만개가 넘는 구절로 이루어져있다. **이 많은 구절을 내가 직접 데이터로 만들기에는 시간과 에너지가 너무 비효율적이라고 생각했다. 그래서 외부 API를 사용하여 개발을 하기로 결정했다.** **RestTemplate을 사용**하여 `https://yesu.io/bible?lang=kor`에 성경 데이터를 요청하여 데이터를 받아왔다. 
+```java
+String title = bibleFindReqDto.getTitle();
+String verseInfo = bibleFindReqDto.getVerseInfo();
+String url = "https://yesu.io/bible?lang=kor"
+        + "&doc=" + title
+        + "&start=" + verseInfo
+        + "&end=" + verseInfo;
+// url format = https://yesu.io/bible?lang=kor&doc=제목&start=시작장:시작절&end=끝장:끝절
+
+BibleApiResult[] result =  new RestTemplate().getForObject(url, BibleApiResult[].class);
+```
+개발기록: (https://github.com/RiverCastle/QuickBibleFinderApi/commit/ae3d6e79497e60f55dbc5d17049f06c39c17f318)
+
+기능이 의도대로 잘 만들어졌으나, **속도가 많이 아쉬웠다.**
+
+
 ## 레포지토리
 
 ## 연락처
