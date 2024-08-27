@@ -45,6 +45,9 @@ BibleApiResult[] result =  new RestTemplate().getForObject(url, BibleApiResult[]
 기능이 의도대로 잘 만들어졌으나, **속도가 많이 아쉬웠다.**
 
 
+---
+
+
 **2024-08-13**
 
 아주 큰 문제가 발생했음을 인식했다. **이 프로젝트에서 아주 전적으로 의존(사용)하고 있는 외부 API가 사라졌다.** 내가 사용하기 시작한지 얼마 지나지 않아 이런 상황을 직면하니 놀라지 않을 수 없었다. 처음에는 두려움이 컸다. "설마 나 때문에 이 서비스가 폐쇄된건가?" 생각이 들었다. 하지만 자동으로 계속 요청을 보내거나 엄청나게 많은 요청을 보낸 적도 없었기 때문에 "나 때문은 아니겠지..."라고 생각하고 문제를 어떻게 해결할지 고민하기 시작했다. 
@@ -60,6 +63,9 @@ BibleApiResult[] result =  new RestTemplate().getForObject(url, BibleApiResult[]
 개발기록: (https://github.com/RiverCastle/QuickBibleFinderApi/commit/fa5ee6824f1b048d2f619cb86d4c39e40922f729)
 
 기능이 의도대로 잘 만들어졌고, **속도가 많이 개선되었다.**
+
+---
+
 
 **2024-08-24**
 
@@ -103,7 +109,31 @@ public class MethodUsageLogService {
 
 기발기록: (https://github.com/RiverCastle/QuickBibleFinderApi/commit/05a772b23a7147fd493be5ef6fae4a38f1d1cb86)
 
+---
 
+**2024-08-27**
+
+성경의 데이터베이스는 완성된 경우, 처리할 쿼리문이 거의 100%로 SELECT문이다. 이 경우, 인덱스를 적용하기에 안성맞춤이다. UPDATE, INSERT, DELETE문을 처리할 경우, 인덱스 수정 작업을 위해 시간이 더 소요되어 좋지 않지만, 성경 데이터베이스처럼 SELECT문만 처리할 경우 인덱스를 활용한 조회 시간 단축의 장점만 생기기때문이다. 그래서 3개의 컬럼(성경책, 장, 절)에 대하여 인덱스를 생성하여 성능 개선을 기대해보았다. 
+
+**인덱스를 적용 전 결과**
+
+![image](https://github.com/user-attachments/assets/09f998f9-9d45-47d5-8414-6a85542d0aa1)
+
+**최소 22 ms ~ 최대 50 ms**
+
+
+
+**인덱스를 적용 후 결과**
+
+![image](https://github.com/user-attachments/assets/469bfb04-3210-40e6-8938-13139dea881e)
+
+**최소 2 ms ~ 최대 4 ms**
+
+
+
+사실 체감할 수 있는 수준은 아니었다. 인덱스를 적용하기 전에도 충분히 실제 상황에서 사용할 수 있을 수준의 속도를 보여줬다. 하지만, 인덱스를 사용하기에 안성맞춤인 상황이었고, 체감은 되지 않아도 수치적으로 약 15배 정도 빠르게 데이터를 조회할 수 있어서 적용하는 것이 좋다고 판단했다.
+
+---
 
 ## 레포지토리
 
