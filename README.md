@@ -107,7 +107,32 @@ public class MethodUsageLogService {
 }
 ```
 
-기발기록: (https://github.com/RiverCastle/QuickBibleFinderApi/commit/05a772b23a7147fd493be5ef6fae4a38f1d1cb86)
+기발기록: https://github.com/RiverCastle/QuickBibleFinderApi/commit/05a772b23a7147fd493be5ef6fae4a38f1d1cb86
+
+---
+
+**2024-08-26**
+
+아래의 그림은 요청한 구절을 보여주는 페이지이다. 하단 좌우에 이전 구절 버튼과 다음 구절 버튼이 있다. 
+
+![image](https://github.com/user-attachments/assets/df696029-57b7-41d5-8a56-362cc26e9fd1)
+
+문제는 **다음 구절 버튼**에서 발생했다. 
+
+각 Chapter에는 마지막 구절이 있다. 반대로, 1절보다 이전의 구절은 없다. 아래의 코드는 verse가 1보다 작아지지 않도록 제한하는 코드이다.
+
+```
+if (currentVerse > 1) verse = verse - 1;
+```
+
+위와 같이 마지막 절에 대해서도 마지막 절을 넘어가지 않도록 제한이 필요했다.
+
+```
+if (currentVerse < maxVerse) verse = verse + 1;
+```
+
+그래서 위와 같이 BibleObject에서 maxVerse를 가져와 비교하는 구문을 추가하여 제한하여 문제를 해결하였다. 
+
 
 ---
 
@@ -142,9 +167,5 @@ https://github.com/RiverCastle/QuickBibleFinderApi
 
 ## 연락처
 이메일: fayal3@naver.com
-
-카카오톡 오픈채팅:
-
-![1724722392138](https://github.com/user-attachments/assets/32e61c98-4e13-42ad-bf60-d7d4015f2cf3)
 
 
