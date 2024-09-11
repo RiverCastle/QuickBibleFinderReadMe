@@ -155,11 +155,25 @@ if (currentVerse < maxVerse) verse = verse + 1;
 **최소 2 ms ~ 최대 4 ms**
 
 
-
 사실 체감할 수 있는 수준은 아니었다. 인덱스를 적용하기 전에도 충분히 실제 상황에서 사용할 수 있을 수준의 속도를 보여줬다. 하지만, 인덱스를 사용하기에 안성맞춤인 상황이었고, 체감은 되지 않아도 수치적으로 약 15배 정도 빠르게 데이터를 조회할 수 있어서 적용하는 것이 좋다고 판단했다.
 
 ---
 
+**2024-09-11**
+
+EC2에 도메인 네임 서버를 설정했다. 
+
+![image](https://github.com/user-attachments/assets/383401bf-dc61-4fb7-9211-3562863db8ce)
+
+도메인 네임 서버를 설정한 후 테스트를 하면서 한 가지 이상 현상에 주목했다. 
+
+![image](https://github.com/user-attachments/assets/cab3237d-1420-4564-a0ab-20e801c0c742)
+
+위의 사진은 Go 버튼을 눌러 요청한 성경 구절을 새 페이지로 보여주는 장면이다. 노란색 상자는 EC2 public DNS를 나타내는데, 이는 config.js 파일에서 FRONTEND_BASE_URL을 아직 도메인 값으로 할당하지 않아서이다. 하지만, 그것과 관계없이 나는 데이터가 보이지 않는 이상 현상에 대해서는 이해하지 못했다. 
+
+
+
+---
 ## 레포지토리
 
 https://github.com/RiverCastle/QuickBibleFinderApi
