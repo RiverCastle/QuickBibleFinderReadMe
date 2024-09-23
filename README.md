@@ -175,8 +175,12 @@ EC2에 도메인 네임 서버를 설정했다.
 
 ---
 ## 레포지토리
-
+백엔드 :
 https://github.com/RiverCastle/QuickBibleFinderApi
+
+
+프론트엔드 :
+https://github.com/RiverCastle/QuickBibleFinderViews
 
 
 ## 연락처
