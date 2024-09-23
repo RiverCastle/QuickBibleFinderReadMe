@@ -32,7 +32,7 @@ BibleApiResult[] result =  new RestTemplate().getForObject(url, BibleApiResult[]
 ```
 개발기록: (https://github.com/RiverCastle/QuickBibleFinderApi/commit/ae3d6e79497e60f55dbc5d17049f06c39c17f318)
 
-기능이 의도대로 잘 만들어졌으나, **속도가 많이 아쉬웠다.**
+기능이 의도대로 잘 만들어졌으나, 5초정도 소요되기 때문에 실제 상황에서 사용하기에는 **속도가 많이 아쉬웠다.**
 
 
 ---
