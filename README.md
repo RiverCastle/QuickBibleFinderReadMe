@@ -175,6 +175,12 @@ https://github.com/RiverCastle/QuickBibleFinderApi
 프론트엔드 :
 https://github.com/RiverCastle/QuickBibleFinderViews
 
+---
+## 프로젝트 구조
+![image](https://github.com/user-attachments/assets/fb326268-044a-4356-b026-fce95f5b63d6)
+
+
+
 
 ## 연락처
 이메일: fayal3@naver.com
