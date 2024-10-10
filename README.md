@@ -9,7 +9,7 @@
 
 ## 배포 링크
 
-http://quick-bible-finder.site
+https://quick-bible-finder.site
 
 ## 기능
 
